@@ -1,7 +1,8 @@
 use chrono::{DateTime, Utc};
 use uuid::Uuid;
 
-pub struct Exception{
+#[warn(dead_code)]
+pub struct Exception {
     id:Uuid,
     signature: String,
     application:String,

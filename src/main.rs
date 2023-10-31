@@ -1,4 +1,4 @@
-use axum::{routing::get, Router, ServiceExt};
+use axum::{routing::get, Router};
 mod handlers;
 mod db_models;
 use sqlx::postgres::PgPoolOptions;
