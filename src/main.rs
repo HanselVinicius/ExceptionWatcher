@@ -1,8 +1,9 @@
-use axum::{routing::get, Router};
+use axum::{routing::get, routing::post,Router};
 mod handlers;
 mod db_models;
 use sqlx::postgres::PgPoolOptions;
 use std::env;
+
 use dotenv::dotenv;
 
 #[tokio::main]
@@ -16,6 +17,7 @@ async fn main() -> Result<(),Box<dyn std::error::Error>>{
 
     let app = Router::new()
         .route("/", get(handlers::health))
+        .route("/exceptions",post(handlers::insert_exception))
         .with_state(pool);
 
     let port = env::var("PORT").unwrap_or_else(|_| "3000".to_string());
@@ -28,10 +30,10 @@ async fn main() -> Result<(),Box<dyn std::error::Error>>{
 
     Ok(())
 }
-#[cfg(debug_assertions)]
-#[warn(dead_code)]
-fn load_dotenv(){
-    dotenv().ok();
-}
+// #[cfg(debug_assertions)]
+// #[warn(dead_code)]
+// fn load_dotenv(){
+//     dotenv().ok();
+// }
 
 
