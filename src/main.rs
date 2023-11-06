@@ -17,7 +17,9 @@ async fn main() -> Result<(),Box<dyn std::error::Error>>{
 
     let app = Router::new()
         .route("/", get(handlers::health))
-        .route("/exceptions",post(handlers::insert_exception))
+        .route("/v1/exceptions",post(handlers::insert_exception))
+        .route("/v1/exceptions", get(handlers::get_all))
+
         .with_state(pool);
 
     let port = env::var("PORT").unwrap_or_else(|_| "3000".to_string());
