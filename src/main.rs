@@ -3,12 +3,13 @@ mod handlers;
 mod db_models;
 use sqlx::postgres::PgPoolOptions;
 use std::env;
+use axum::routing::delete;
 
 use dotenv::dotenv;
 
 #[tokio::main]
 async fn main() -> Result<(),Box<dyn std::error::Error>>{
-    // load_dotenv();
+    load_dotenv();
     let database_url = env::var("DATABASE_URL").expect("missing DATABASE_URL");
     let pool = PgPoolOptions::new()
         .max_connections(5)
@@ -19,6 +20,7 @@ async fn main() -> Result<(),Box<dyn std::error::Error>>{
         .route("/", get(handlers::health))
         .route("/v1/exceptions",post(handlers::insert_exception))
         .route("/v1/exceptions", get(handlers::get_all))
+        .route("/v1/exceptions/:id", delete(handlers::delete_exception))
 
         .with_state(pool);
 
@@ -32,10 +34,10 @@ async fn main() -> Result<(),Box<dyn std::error::Error>>{
 
     Ok(())
 }
-// #[cfg(debug_assertions)]
-// #[warn(dead_code)]
-// fn load_dotenv(){
-//     dotenv().ok();
-// }
+#[cfg(debug_assertions)]
+#[warn(dead_code)]
+fn load_dotenv(){
+    dotenv().ok();
+}
 
 
