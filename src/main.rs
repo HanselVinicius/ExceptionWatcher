@@ -10,7 +10,7 @@ use tower_http::cors::{Any, CorsLayer};
 
 #[tokio::main]
 async fn main() -> Result<(),Box<dyn std::error::Error>>{
-    load_dotenv();
+   // load_dotenv();
     let database_url = env::var("DATABASE_URL").expect("missing DATABASE_URL");
     let pool = PgPoolOptions::new()
         .max_connections(5)
@@ -36,10 +36,10 @@ async fn main() -> Result<(),Box<dyn std::error::Error>>{
 
     Ok(())
 }
-#[cfg(debug_assertions)]
-#[warn(dead_code)]
-fn load_dotenv(){
-    dotenv().ok();
-}
+// #[cfg(debug_assertions)]
+// #[warn(dead_code)]
+// fn load_dotenv(){
+//     dotenv().ok();
+// }
 
 
